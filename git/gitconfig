@@ -1,0 +1,6 @@
+[user]
+	email = yfhe@ucdavis.edu
+    name = Ethan He
+    editor = vim
+[credential]
+	helper = store
