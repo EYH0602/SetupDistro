@@ -71,8 +71,6 @@ plugins=(
     copydir
     web-search
     themes
-    zsh-syntex-highlighting
-	# zsh-autosuggestion
 )
 
 # Uncomment the following line to use case-sensitive completion.
@@ -159,5 +157,7 @@ prompt_context() {
 }
 
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+
+source ~/.zsh-scripts/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 
 neofetch
