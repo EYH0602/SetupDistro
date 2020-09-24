@@ -1,7 +1,6 @@
 
 # install zsh,  oh-my-zsh, and the extensions
 sudo apt install zsh
-sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
 # autojump
 git clone git://github.com/wting/autojump.git
 cd autojump
@@ -15,5 +14,6 @@ mv ./zsh-syntax-highlighting ~/.zsh-scripts
 # my version of agnoster theme
 cp ./agnoster.zsh-theme ~/.oh-my-zsh/themes/agnoster.zsh-theme
 cp ./zshrc ~/.zshrc
+sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
 source ~/.zshrc
 

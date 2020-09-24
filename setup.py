@@ -24,7 +24,7 @@ os.system("bash setup-vim.sh")
 os.system("sudo apt install chromium-browser")
 
 # visual studio code
-os.system("bash get-vscode.sh")
+# os.system("bash get-vscode.sh")
 
 # Typora (Open-source Markdown editor)
 os.system("wget -qO - https://typora.io/linux/public-key.asc | sudo apt-key add -")
