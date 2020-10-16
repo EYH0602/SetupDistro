@@ -15,9 +15,9 @@ Plug 'junegunn/vim-easy-align'
 Plug 'Yggdroot/LeaderF', { 'do': './install.sh' }
 
 " color scheme
-Plug 'sainnhe/sonokai'
+" Plug 'sainnhe/sonokai'
 " important!!
-set termguicolors
+" set termguicolors
 
 " the configuration options should be placed before `colorscheme sonokai`
 let g:sonokai_style = 'atlantis'    "shusia, andromeda, atlantis, maia
@@ -63,6 +63,11 @@ Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 " Unmanaged plugin (manually installed and updated)
 Plug '~/my-prototype-plugin'
 
+" LaTeX
+Plug 'lervag/vimtex'
+let g:tex_flavor = 'latex'
+let g:vimtex_version_check = 0
+
 " local plugin
 Plug 'itchyny/lightline.vim'
 let g:lightline = {
@@ -80,7 +85,10 @@ set expandtab
 set autoindent
 set smartindent
 
-colorscheme sonokai
+" copy to system clipboard
+set clipboard=unnamedplus
+
+" colorscheme sonokai
 
 " Uncomment the following to have Vim jump to the last position when                                                       
 " reopening a file
@@ -108,6 +116,8 @@ set spelllang=en_us
 " comment out multiple lines & uncomment
 map <S-c> :s/^/\/\//<Enter>
 map <S-u> :s/^\/\///<Enter>
+
+" use system clipboard
 
 " keep 8 lines to top and bottum
 set scrolloff=8
