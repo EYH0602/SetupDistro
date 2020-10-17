@@ -15,9 +15,16 @@ Plug 'junegunn/vim-easy-align'
 Plug 'Yggdroot/LeaderF', { 'do': './install.sh' }
 
 " color scheme
-" Plug 'sainnhe/sonokai'
+Plug 'sainnhe/sonokai'
 " important!!
-" set termguicolors
+set termguicolors
+
+Plug 'joshdick/onedark.vim'
+
+" Vim - Airline
+Plug 'vim-airline/vim-airline'
+Plug 'vim-airline/vim-airline-themes'
+let g:arline_theme='simple'
 
 " the configuration options should be placed before `colorscheme sonokai`
 let g:sonokai_style = 'atlantis'    "shusia, andromeda, atlantis, maia
@@ -97,6 +104,7 @@ let g:pear_tree_timeout = 60
 " Automatically map <BS>, <CR>, and <Esc>
 let g:pear_tree_map_special_keys = 1
 
+Plug 'miyakogi/conoline.vim'
 
 
 " Default mappings:
@@ -134,7 +142,9 @@ set smartindent
 vmap <C-c> y:call system("xclip -i -selection clipboard", getreg("\""))<CR>:call system("xclip -i", getreg("\""))<CR>
 nmap <C-v> :call setreg("\"",system("xclip -o -selection clipboard"))<CR>p
 
-" colorscheme sonokai
+" color sheme
+syntax on
+colorscheme onedark
 
 " Uncomment the following to have Vim jump to the last position when                                                       
 " reopening a file
@@ -154,9 +164,6 @@ set splitright
 
 " set language
 set spelllang=en_us
-
-" set paste
-" set paste
 
 " to format file
 " sudo apt install astyl
@@ -197,11 +204,11 @@ au FileType css setl ofu=csscomplete#CompleteCSS
 
 
 " highlight current line
-set cursorline
-hi cursorline cterm=none term=none
-autocmd WinEnter * setlocal cursorline
-autocmd WinLeave * setlocal nocursorline
-highlight CursorLine guibg=#303000 ctermbg=234
+" set cursorline
+" hi cursorline cterm=none term=none
+" autocmd WinEnter * setlocal cursorline
+" autocmd WinLeave * setlocal nocursorline
+" highlight CursorLine guibg=#303000 ctermbg=234
 
 " LaTeX
 " REQUIRED. This makes vim invoke Latex-Suite when you open a tex file.
