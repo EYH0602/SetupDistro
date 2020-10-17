@@ -68,6 +68,50 @@ Plug 'lervag/vimtex'
 let g:tex_flavor = 'latex'
 let g:vimtex_version_check = 0
 
+" autocomplete parathese
+Plug 'tmsvg/pear-tree'
+" Default rules for matching:
+let g:pear_tree_pairs = {
+            \ '(': {'closer': ')'},
+            \ '[': {'closer': ']'},
+            \ '{': {'closer': '}'},
+            \ "'": {'closer': "'"},
+            \ '"': {'closer': '"'}
+            \ }
+" See pear-tree/after/ftplugin/ for filetype-specific matching rules
+
+" Pear Tree is enabled for all filetypes by default:
+let g:pear_tree_ft_disabled = []
+
+" Pair expansion is dot-repeatable by default:
+let g:pear_tree_repeatable_expand = 1
+
+" Smart pairs are disabled by default:
+let g:pear_tree_smart_openers = 0
+let g:pear_tree_smart_closers = 0
+let g:pear_tree_smart_backspace = 0
+
+" If enabled, smart pair functions timeout after 60ms:
+let g:pear_tree_timeout = 60
+
+" Automatically map <BS>, <CR>, and <Esc>
+let g:pear_tree_map_special_keys = 1
+
+
+
+" Default mappings:
+imap <BS> <Plug>(PearTreeBackspace)
+imap <CR> <Plug>(PearTreeExpand)
+imap <Esc> <Plug>(PearTreeFinishExpansion)
+" Pear Tree also makes <Plug> mappings for each opening and closing string.
+"     :help <Plug>(PearTreeOpener)
+"     :help <Plug>(PearTreeCloser)
+
+" Not mapped by default:
+" <Plug>(PearTreeSpace)
+" <Plug>(PearTreeJump)
+" <Plug>(PearTreeExpandOne)
+" <Plug>(PearTreeJNR)
 " local plugin
 Plug 'itchyny/lightline.vim'
 let g:lightline = {
@@ -86,7 +130,9 @@ set autoindent
 set smartindent
 
 " copy to system clipboard
-set clipboard=unnamedplus
+" The reason for the double-command on <C-c> is due to some weirdness with the X clipboard system.
+vmap <C-c> y:call system("xclip -i -selection clipboard", getreg("\""))<CR>:call system("xclip -i", getreg("\""))<CR>
+nmap <C-v> :call setreg("\"",system("xclip -o -selection clipboard"))<CR>p
 
 " colorscheme sonokai
 
@@ -109,6 +155,9 @@ set splitright
 " set language
 set spelllang=en_us
 
+" set paste
+" set paste
+
 " to format file
 " sudo apt install astyl
 " :%!astyle
@@ -117,7 +166,6 @@ set spelllang=en_us
 map <S-c> :s/^/\/\//<Enter>
 map <S-u> :s/^\/\///<Enter>
 
-" use system clipboard
 
 " keep 8 lines to top and bottum
 set scrolloff=8
@@ -130,18 +178,46 @@ au FileType c setl ofu=ccomplete#CompleteCpp
 au FileType css setl ofu=csscomplete#CompleteCSS
 
 " auto complete ([{
-function! ConditionalPairMap(open, close)
-  let line = getline('.')
-  let col = col('.')
-  if col < col('$') || stridx(line, a:close, col + 1) != -1
-    return a:open
-  else
-    return a:open . a:close . repeat("\<left>", len(a:close))
-  endif 
-endfunction
-inoremap <expr> ( ConditionalPairMap('(', ')')
-inoremap <expr> { ConditionalPairMap('{', '}')
-inoremap <expr> [ ConditionalPairMap('[', ']')
+" function! ConditionalPairMap(open, close)
+"   let line = getline('.')
+"   let col = col('.')
+"   if col < col('$') || stridx(line, a:close, col + 1) != -1
+"     return a:open
+"   else
+"     return a:open . a:close . repeat("\<left>", len(a:close))
+"   endif 
+" endfunction
+" inoremap <expr> ( ConditionalPairMap('(', ')')
+" inoremap <expr> { ConditionalPairMap('{', '}')
+" inoremap <expr> [ ConditionalPairMap('[', ']')
+
+" auto complete ([{
+" inoremap        (  ()<Left>
+" inoremap <expr> )  strpart(getline('.'), col('.')-1, 1) == ")" ? "\<Right>" : ")"
+
+
+" highlight current line
+set cursorline
+hi cursorline cterm=none term=none
+autocmd WinEnter * setlocal cursorline
+autocmd WinLeave * setlocal nocursorline
+highlight CursorLine guibg=#303000 ctermbg=234
+
+" LaTeX
+" REQUIRED. This makes vim invoke Latex-Suite when you open a tex file.
+" filetype plugin on
+
+" " IMPORTANT: win32 users will need to have 'shellslash' set so that latex
+" " can be called correctly.
+" set shellslash
+
+" " OPTIONAL: This enables automatic indentation as you type.
+" filetype indent on
+
+" " OPTIONAL: Starting with Vim 7, the filetype of empty .tex files defaults to
+" " 'plaintex' instead of 'tex', which results in vim-latex not being loaded.
+" " The following changes the default filetype back to 'tex':
+" let g:tex_flavor='latex'
 
 " resize vertical split window
 nnoremap <silent> <Leader>+ :exe "resize " . (winheight(0) * 3/2)<CR>
