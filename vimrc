@@ -21,6 +21,14 @@ set termguicolors
 
 Plug 'joshdick/onedark.vim'
 
+" Markdown
+Plug 'godlygeek/tabular'
+Plug 'plasticboy/vim-markdown'
+let g:vim_markdown_folding_disabled = 1
+let g:vim_markdown_math = 1
+let g:vim_markdown_new_list_item_indent = 2
+
+
 " Vim - Airline
 " Plug 'vim-airline/vim-airline'
 " Plug 'vim-airline/vim-airline-themes'
