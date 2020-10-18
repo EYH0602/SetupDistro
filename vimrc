@@ -22,9 +22,9 @@ set termguicolors
 Plug 'joshdick/onedark.vim'
 
 " Vim - Airline
-Plug 'vim-airline/vim-airline'
-Plug 'vim-airline/vim-airline-themes'
-let g:arline_theme='simple'
+" Plug 'vim-airline/vim-airline'
+" Plug 'vim-airline/vim-airline-themes'
+" let g:arline_theme='simple'
 
 " the configuration options should be placed before `colorscheme sonokai`
 let g:sonokai_style = 'atlantis'    "shusia, andromeda, atlantis, maia
@@ -104,8 +104,8 @@ let g:pear_tree_timeout = 60
 " Automatically map <BS>, <CR>, and <Esc>
 let g:pear_tree_map_special_keys = 1
 
-Plug 'miyakogi/conoline.vim'
 
+Plug 'miyakogi/conoline.vim'
 
 " Default mappings:
 imap <BS> <Plug>(PearTreeBackspace)
@@ -122,9 +122,24 @@ imap <Esc> <Plug>(PearTreeFinishExpansion)
 " <Plug>(PearTreeJNR)
 " local plugin
 Plug 'itchyny/lightline.vim'
+set laststatus=2
+set noshowmode
 let g:lightline = {
       \ 'colorscheme': 'wombat',
+      \ 'component_function': {
+      \   'filename': 'LightlineFilename',
+      \ },
       \ }
+function! LightlineFilename()
+  return &filetype ==# 'vimfiler' ? vimfiler#get_status_string() :
+        \ &filetype ==# 'unite' ? unite#get_status_string() :
+        \ &filetype ==# 'vimshell' ? vimshell#get_status_string() :
+        \ expand('%:t') !=# '' ? expand('%:t') : '[No Name]'
+endfunction
+
+let g:unite_force_overwrite_statusline = 0
+let g:vimfiler_force_overwrite_statusline = 0
+let g:vimshell_force_overwrite_statusline = 0
 " Initialize plugin system
 call plug#end()
 
@@ -233,6 +248,11 @@ nnoremap <silent> <Leader>- :exe "resize " . (winheight(0) * 2/3)<CR>)
 " map space to : in normal mode and virtual mode
 nmap <space> :
 vmap <space> :
+
+" font ligatures
+set renderoptions=type:directx
+set encoding=utf-8
+
 
 " cap this word in normal mode
 nnoremap <C-S-U> m1gUiw`1
