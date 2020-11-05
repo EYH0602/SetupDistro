@@ -8,7 +8,7 @@
 sync_dir = "~/OneDrive"
 # skip_file = "~*|.~*|*.tmp"
 # monitor_interval = "300"
-skip_dir = "Music|Pictures|EAFEN's|College|High\ School|Notability"
+skip_dir = "Music|Pictures|EAFEN's|HighSchool|Notability"
 # log_dir = "/var/log/onedrive/"
 # drive_id = ""
 # upload_only = "false"
