@@ -14,12 +14,19 @@ Plug 'junegunn/vim-easy-align'
 " function list
 Plug 'Yggdroot/LeaderF', { 'do': './install.sh' }
 
-" color scheme
+" *** color scheme ***
 Plug 'sainnhe/sonokai'
 " important!!
 set termguicolors
 
 Plug 'joshdick/onedark.vim'
+
+Plug 'arzg/vim-corvine'
+
+" the configuration options should be placed before `colorscheme sonokai`
+let g:sonokai_style = 'atlantis'    "shusia, andromeda, atlantis, maia
+let g:sonokai_enable_italic = 1
+let g:sonokai_disable_italic_comment = 1
 
 " Markdown
 Plug 'godlygeek/tabular'
@@ -29,17 +36,6 @@ let g:vim_markdown_math = 1
 let g:vim_markdown_new_list_item_indent = 2
 
 
-" Vim - Airline
-" Plug 'vim-airline/vim-airline'
-" Plug 'vim-airline/vim-airline-themes'
-" let g:arline_theme='simple'
-
-" the configuration options should be placed before `colorscheme sonokai`
-let g:sonokai_style = 'atlantis'    "shusia, andromeda, atlantis, maia
-let g:sonokai_enable_italic = 1
-let g:sonokai_disable_italic_comment = 1
-let g:lightline = {}
-let g:lightline.colorscheme = 'sonokai'
 
 " colorful ([{
 Plug 'frazrepo/vim-rainbow'
@@ -83,6 +79,14 @@ Plug 'lervag/vimtex'
 let g:tex_flavor = 'latex'
 let g:vimtex_version_check = 0
 
+" LaTeX live preview
+Plug 'xuhdev/vim-latex-live-preview', { 'for': 'tex' }
+
+" HTML
+Plug 'mattn/emmet-vim'
+let g:user_emmet_install_global = 0
+autocmd FileType html,css EmmetInstall
+
 " autocomplete parathese
 Plug 'tmsvg/pear-tree'
 " Default rules for matching:
@@ -114,6 +118,9 @@ let g:pear_tree_map_special_keys = 1
 
 
 Plug 'miyakogi/conoline.vim'
+
+Plug 'wakatime/vim-wakatime'
+
 
 " Default mappings:
 imap <BS> <Plug>(PearTreeBackspace)
@@ -160,6 +167,8 @@ set expandtab
 set autoindent
 set smartindent
 
+command! -nargs=0 Livepdf LLPStartPreview
+
 " copy to system clipboard
 " The reason for the double-command on <C-c> is due to some weirdness with the X clipboard system.
 vmap <C-c> y:call system("xclip -i -selection clipboard", getreg("\""))<CR>:call system("xclip -i", getreg("\""))<CR>
@@ -167,7 +176,10 @@ nmap <C-v> :call setreg("\"",system("xclip -o -selection clipboard"))<CR>p
 
 " color sheme
 syntax on
-colorscheme onedark
+" colorscheme onedark
+set termguicolors
+colorscheme corvine
+
 
 " Uncomment the following to have Vim jump to the last position when                                                       
 " reopening a file
