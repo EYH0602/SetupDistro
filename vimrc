@@ -14,19 +14,6 @@ Plug 'junegunn/vim-easy-align'
 " function list
 Plug 'Yggdroot/LeaderF', { 'do': './install.sh' }
 
-" *** color scheme ***
-Plug 'sainnhe/sonokai'
-" important!!
-set termguicolors
-
-Plug 'joshdick/onedark.vim'
-
-Plug 'arzg/vim-corvine'
-
-" the configuration options should be placed before `colorscheme sonokai`
-let g:sonokai_style = 'atlantis'    "shusia, andromeda, atlantis, maia
-let g:sonokai_enable_italic = 1
-let g:sonokai_disable_italic_comment = 1
 
 " Markdown
 Plug 'godlygeek/tabular'
@@ -35,19 +22,16 @@ let g:vim_markdown_folding_disabled = 1
 let g:vim_markdown_math = 1
 let g:vim_markdown_new_list_item_indent = 2
 
+" Haskell
+Plug 'neovimhaskell/haskell-vim'
+let g:haskell_enable_quantification = 1   " to enable highlighting of `forall`
+let g:haskell_enable_recursivedo = 1      " to enable highlighting of `mdo` and `rec`
+let g:haskell_enable_arrowsyntax = 1      " to enable highlighting of `proc`
+let g:haskell_enable_pattern_synonyms = 1 " to enable highlighting of `pattern`
+let g:haskell_enable_typeroles = 1        " to enable highlighting of type roles
+let g:haskell_enable_static_pointers = 1  " to enable highlighting of `static`
+let g:haskell_backpack = 1                " to enable highlighting of backpack keywords
 
-
-" colorful ([{
-Plug 'frazrepo/vim-rainbow'
-let g:rainbow_active = 1
-let g:rainbow_load_separately = [
-    \ [ '*' , [['(', ')'], ['\[', '\]'], ['{', '}']] ],
-    \ [ '*.tex' , [['(', ')'], ['\[', '\]']] ],
-    \ [ '*.cpp' , [['(', ')'], ['\[', '\]'], ['{', '}']] ],
-    \ [ '*.{html,htm}' , [['(', ')'], ['\[', '\]'], ['{', '}'], ['<\a[^>]*>', '</[^>]*>']] ],
-    \ ]
-let g:rainbow_guifgs = ['RoyalBlue3', 'DarkOrange3', 'DarkOrchid3', 'FireBrick']
-let g:rainbow_ctermfgs = ['lightblue', 'lightgreen', 'yellow', 'red', 'magenta']
 
 " Any valid git URL is allowed
 Plug 'https://github.com/junegunn/vim-github-dashboard.git'
@@ -58,15 +42,6 @@ Plug 'SirVer/ultisnips' | Plug 'honza/vim-snippets'
 " On-demand loading
 Plug 'scrooloose/nerdtree', { 'on':  'NERDTreeToggle' }
 Plug 'tpope/vim-fireplace', { 'for': 'clojure' }
-
-" Using a non-master branch
-Plug 'rdnetto/YCM-Generator', { 'branch': 'stable' }
-
-" Using a tagged release; wildcard allowed (requires git 1.9.2 or above)
-Plug 'fatih/vim-go', { 'tag': '*' }
-
-" Plugin options
-Plug 'nsf/gocode', { 'tag': 'v.20150303', 'rtp': 'vim' }
 
 " Plugin outside ~/.vim/plugged with post-update hook
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
@@ -81,11 +56,8 @@ let g:vimtex_version_check = 0
 
 " LaTeX live preview
 Plug 'xuhdev/vim-latex-live-preview', { 'for': 'tex' }
+let g:livepreview_previewer = 'okular'
 
-" HTML
-Plug 'mattn/emmet-vim'
-let g:user_emmet_install_global = 0
-autocmd FileType html,css EmmetInstall
 
 " autocomplete parathese
 Plug 'tmsvg/pear-tree'
@@ -95,7 +67,8 @@ let g:pear_tree_pairs = {
             \ '[': {'closer': ']'},
             \ '{': {'closer': '}'},
             \ "'": {'closer': "'"},
-            \ '"': {'closer': '"'}
+            \ '"': {'closer': '"'},
+            \ '`': {'closer': "'"}
             \ }
 " See pear-tree/after/ftplugin/ for filetype-specific matching rules
 
@@ -116,31 +89,43 @@ let g:pear_tree_timeout = 60
 " Automatically map <BS>, <CR>, and <Esc>
 let g:pear_tree_map_special_keys = 1
 
+Plug 'luochen1990/rainbow'
+let g:rainbow_active = 1 "set to 0 if you want to enable it later via :RainbowToggle
+
 
 Plug 'miyakogi/conoline.vim'
 
 Plug 'wakatime/vim-wakatime'
+
+Plug 'jbgutierrez/vim-better-comments'
 
 
 " Default mappings:
 imap <BS> <Plug>(PearTreeBackspace)
 imap <CR> <Plug>(PearTreeExpand)
 imap <Esc> <Plug>(PearTreeFinishExpansion)
-" Pear Tree also makes <Plug> mappings for each opening and closing string.
-"     :help <Plug>(PearTreeOpener)
-"     :help <Plug>(PearTreeCloser)
-
-" Not mapped by default:
-" <Plug>(PearTreeSpace)
-" <Plug>(PearTreeJump)
-" <Plug>(PearTreeExpandOne)
-" <Plug>(PearTreeJNR)
-" local plugin
 Plug 'itchyny/lightline.vim'
-set laststatus=2
-set noshowmode
+" Initialize plugin system
+
+" *** color scheme ***
+Plug 'sainnhe/sonokai'
+Plug 'Mizux/vim-colorschemes'
+Plug 'miyakogi/slateblue.vim'
+Plug 'joshdick/onedark.vim'
+Plug 'arzg/vim-corvine'
+Plug 'sickill/vim-monokai'
+Plug 'patstockwell/vim-monokai-tasty'
+Plug 'mhartington/oceanic-next'
+
+call plug#end()
+
+
+" defined functions
+command! -nargs=0 Livepdf LLPStartPreview
+
+" Light line
 let g:lightline = {
-      \ 'colorscheme': 'wombat',
+      \ 'colorscheme': 'monokai_tasty',
       \ 'component_function': {
       \   'filename': 'LightlineFilename',
       \ },
@@ -155,9 +140,24 @@ endfunction
 let g:unite_force_overwrite_statusline = 0
 let g:vimfiler_force_overwrite_statusline = 0
 let g:vimshell_force_overwrite_statusline = 0
-" Initialize plugin system
-call plug#end()
 
+" color sheme
+syntax on
+set termguicolors
+
+" the configuration options should be placed before `colorscheme sonokai`
+let g:sonokai_style = 'atlantis'    "shusia, andromeda, atlantis, maia
+let g:sonokai_enable_italic = 1
+let g:sonokai_disable_italic_comment = 1
+let g:vim_monokai_tasty_italic = 1
+
+" colorscheme onedark
+" colorscheme corvine
+" colorscheme sonokai
+" colorscheme slateblue
+" colorscheme pencil
+colorscheme vim-monokai-tasty
+" colorscheme OeanicNext
 
 " set tabs and indent
 set tabstop=4
@@ -167,19 +167,25 @@ set expandtab
 set autoindent
 set smartindent
 
-command! -nargs=0 Livepdf LLPStartPreview
+set laststatus=2
+set noshowmode
+" set number line on the left
+set number relativenumber
+set nu rnu
+set numberwidth=2
+set cpoptions+=n
+" keep 8 lines to top and bottum
+set scrolloff=8
 
-" copy to system clipboard
-" The reason for the double-command on <C-c> is due to some weirdness with the X clipboard system.
-vmap <C-c> y:call system("xclip -i -selection clipboard", getreg("\""))<CR>:call system("xclip -i", getreg("\""))<CR>
-nmap <C-v> :call setreg("\"",system("xclip -o -selection clipboard"))<CR>p
+" set vertical split to right
+set splitright
 
-" color sheme
-syntax on
-" colorscheme onedark
-set termguicolors
-colorscheme corvine
+" set language
+set spelllang=en_us
 
+" font ligatures
+set renderoptions=type:directx
+set encoding=utf-8
 
 " Uncomment the following to have Vim jump to the last position when                                                       
 " reopening a file
@@ -188,30 +194,12 @@ if has("autocmd")
     \| exe "normal! g'\"" | endif
 endif
 
-" set number line on the left
-set number relativenumber
-set nu rnu
-set numberwidth=2
-set cpoptions+=n
-
-" set vertical split to right
-set splitright
-
-" set language
-set spelllang=en_us
 
 " to format file
 " sudo apt install astyl
 " :%!astyle
 
-" comment out multiple lines & uncomment
-map <S-c> :s/^/\/\//<Enter>
-map <S-u> :s/^\/\///<Enter>
-
-
-" keep 8 lines to top and bottum
-set scrolloff=8
- 
+" mappings
 filetype plugin on
 au FileType php setl ofu=phpcomplete#CompletePHP
 au FileType ruby,eruby setl ofu=rubycomplete#Complete
@@ -219,47 +207,8 @@ au FileType html,xhtml setl ofu=htmlcomplete#CompleteTags
 au FileType c setl ofu=ccomplete#CompleteCpp
 au FileType css setl ofu=csscomplete#CompleteCSS
 
-" auto complete ([{
-" function! ConditionalPairMap(open, close)
-"   let line = getline('.')
-"   let col = col('.')
-"   if col < col('$') || stridx(line, a:close, col + 1) != -1
-"     return a:open
-"   else
-"     return a:open . a:close . repeat("\<left>", len(a:close))
-"   endif 
-" endfunction
-" inoremap <expr> ( ConditionalPairMap('(', ')')
-" inoremap <expr> { ConditionalPairMap('{', '}')
-" inoremap <expr> [ ConditionalPairMap('[', ']')
+autocmd FileType haskell setlocal shiftwidth=2 softtabstop=2 expandtab
 
-" auto complete ([{
-" inoremap        (  ()<Left>
-" inoremap <expr> )  strpart(getline('.'), col('.')-1, 1) == ")" ? "\<Right>" : ")"
-
-
-" highlight current line
-" set cursorline
-" hi cursorline cterm=none term=none
-" autocmd WinEnter * setlocal cursorline
-" autocmd WinLeave * setlocal nocursorline
-" highlight CursorLine guibg=#303000 ctermbg=234
-
-" LaTeX
-" REQUIRED. This makes vim invoke Latex-Suite when you open a tex file.
-" filetype plugin on
-
-" " IMPORTANT: win32 users will need to have 'shellslash' set so that latex
-" " can be called correctly.
-" set shellslash
-
-" " OPTIONAL: This enables automatic indentation as you type.
-" filetype indent on
-
-" " OPTIONAL: Starting with Vim 7, the filetype of empty .tex files defaults to
-" " 'plaintex' instead of 'tex', which results in vim-latex not being loaded.
-" " The following changes the default filetype back to 'tex':
-" let g:tex_flavor='latex'
 
 " resize vertical split window
 nnoremap <silent> <Leader>+ :exe "resize " . (winheight(0) * 3/2)<CR>
@@ -268,10 +217,6 @@ nnoremap <silent> <Leader>- :exe "resize " . (winheight(0) * 2/3)<CR>)
 " map space to : in normal mode and virtual mode
 nmap <space> :
 vmap <space> :
-
-" font ligatures
-set renderoptions=type:directx
-set encoding=utf-8
 
 
 " cap this word in normal mode

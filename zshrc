@@ -1,3 +1,5 @@
+
+
 # If you come from bash you might have to change your $PATH.
 # export PATH=$HOME/bin:/usr/local/bin:$PATH
 
@@ -5,21 +7,45 @@
 export ZSH="/home/eeeh/.oh-my-zsh"
 export VISUAL=vim
 export EDITOR="$VISUAL"
+DISABLE_UPDATE_PROMPT=true
 
-# customize commands
+# customize commeval
+alias jq="jq ."
+alias textmatlab="matlab -nodesktop"
+alias handin="cp Makefile *.c* *.h* ./Autograder"
 alias py=python3
 alias pwsh=powershell.exe
-alias etex="pdflatex"
-alias ctex="xelatex"
+alias rm=trash
+alias mkpkg="makepkg -si"
 alias csif="ssh yifengh@pc20.cs.ucdavis.edu"
+alias ubuntuVM="ssh hyf@127.0.0.1 -p 2222"
 alias gitlog="git log --all --graph --decorate"
 alias start=xdg-open
+alias changecolor="papirus-folders --theme Papirus-Dark -C"
+alias color="papirus-folders -l --theme Papirus-Dark"
+alias defaultColor="papirus-folders -D --theme Papirus-Dark"
+alias restoreColot="papirus-folders -Ru"
 # sync to OneDrive
 alias sync="onedrive --synchronize"
 alias monitor="onedrive --monitor"
 # monitor hardware
 
+
+# Steelseries keyboard RGB
+alias keyboardRGB="msi-perkeyrgb --model GS65"
+
+# alias ls='ls --color=auto'
+alias grep='grep --colour=auto'
+alias egrep='egrep --colour=auto'
+alias fgrep='fgrep --colour=auto'
+# alias cp="cp -i"                          # confirm before overwriting something
+alias df='df -h'                          # human-readable sizes
+alias free='free -m'                      # show sizes in MB
+alias vp='vim -w PKGBUILD'
+alias more=less
+
 # open files with ...
+alias -s circ=logisim
 alias -s c=ccat
 alias -s cpp=ccat
 alias -s py=ccat
@@ -33,8 +59,6 @@ alias -s json=code
 alias -s gz="tar xvf"
 alias -s tar="tar xvf"
 
-# command for urls
-alias homepage="start https://eyh0602.github.io/"
 
 [[ -s ~/.autojump/etc/profile.d/autojump.sh ]] && . ~/.autojump/etc/profile.d/autojump.sh
 
@@ -44,7 +68,17 @@ alias homepage="start https://eyh0602.github.io/"
 # load a random theme each time oh-my-zsh is loaded, in which case,
 # to know which specific one was loaded, run: echo $RANDOM_THEME
 # See https://github.com/ohmyzsh/ohmyzsh/wiki/Themes
-ZSH_THEME="agnoster"
+# ZSH_THEME="agnoster"
+# ZSH_THEME="fishbone++"
+ZSH_THEME="powerlevel10k/powerlevel10k"
+
+# ZSH_THEME="typewritten"
+# TYPEWRITTEN_SYMBOL="$"
+# TYPEWRITTEN_CURSOR="terminal"
+# TYPEWRITTEN_RIGHT_PROMPT_PREFIX="0_0 "
+# TYPEWRITTEN_PROMPT_LAYOUT="multiline"
+# TYPEWRITTEN_GIT_RELATIVE_PATH=true
+
 
 # Set list of themes to pick from when loading at random
 # Setting this variable when ZSH_THEME=random will cause zsh to load
@@ -71,6 +105,7 @@ plugins=(
     copydir
     web-search
     themes
+    # wakatime
 )
 
 # Uncomment the following line to use case-sensitive completion.
@@ -130,11 +165,11 @@ source $ZSH/oh-my-zsh.sh
 export LANG=en_US.UTF-8
 
 # Preferred editor for local and remote sessions
-# if [[ -n $SSH_CONNECTION ]]; then
-#   export EDITOR='vim'
-# else
-#   export EDITOR='vim'
-# fi
+if [[ -n $SSH_CONNECTION ]]; then
+  export EDITOR='vim'
+else
+  export EDITOR='vim'
+fi
 
 # Compilation flags
 # export ARCHFLAGS="-arch x86_64"
@@ -149,15 +184,43 @@ export LANG=en_US.UTF-8
 # alias ohmyzsh="mate ~/.oh-my-zsh"
 
 # hide user@hostname
-prompt_context() {
-  # Custom (Random emoji)
-  emojis=("🔥" "😎" "🍻" "🚀" "💡" "🚦" "🌙" "🀄️" "🉑" "🉐")
-  RAND_EMOJI_N=$(( $RANDOM % ${#emojis[@]} + 1))
-  prompt_segment black default "eeeh ${emojis[$RAND_EMOJI_N]}"
-}
+# prompt_context() {
+#   # Custom (Random emoji)
+#   emojis=("🔥" "🍻" "🚀" "💡" "🚦" "🌙")   
+#   RAND_EMOJI_N=$(( $RANDOM % ${#emojis[@]} + 1))
+#   prompt_segment black default "%T" # ${emojis[$RAND_EMOJI_N]}"
+# }
 
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 
 source ~/.zsh-scripts/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 
-neofetch
+BLACK=$(tput setaf 0)
+RED=$(tput setaf 1)
+GREEN=$(tput setaf 2)
+YELLOW=$(tput setaf 3)
+LIME_YELLOW=$(tput setaf 190)
+POWDER_BLUE=$(tput setaf 153)
+BLUE=$(tput setaf 4)
+MAGENTA=$(tput setaf 5)
+CYAN=$(tput setaf 6)
+WHITE=$(tput setaf 7)
+BRIGHT=$(tput bold)
+NORMAL=$(tput sgr0)
+BLINK=$(tput blink)
+REVERSE=$(tput smso)
+UNDERLINE=$(tput smul)
+
+echo "${RED}Hello ${BLUE}Ethan! ${GREEN}Have ${MAGENTA}a nice day${YELLOW}!"
+
+# Enable Powerlevel10k instant prompt. Should stay close to the top of ~/.zshrc.
+# Initialization code that may require console input (password prompts, [y/n]
+# confirmations, etc.) must go above this block; everything else may go below.
+if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]; then
+  source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
+fi
+
+# To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
+[[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
+
+
