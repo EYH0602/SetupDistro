@@ -1,29 +1,73 @@
 
-" Specify a directory for plugins
-" - For Neovim: stdpath('data') . '/plugged'
-" - Avoid using standard Vim directory names like 'plugin'
+"""""""""""
+" Plugins "
+"""""""""""
 call plug#begin('~/.vim/plugged')
 
-" Make sure you use single quotes
-
-" Shorthand notation; fetches https://github.com/junegunn/vim-easy-align
 Plug 'junegunn/vim-easy-align'
-
-" syntex
-
-" function list
+Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 Plug 'Yggdroot/LeaderF', { 'do': './install.sh' }
 
 
-" Markdown
-Plug 'godlygeek/tabular'
+"=================="
+" Language Plugins "
+"=================="
+Plug 'sudar/comments.vim'
+Plug 'neoclide/coc.nvim', {'branch': 'release'}
+
 Plug 'plasticboy/vim-markdown'
+Plug 'lervag/vimtex'
+Plug 'xuhdev/vim-latex-live-preview', { 'for': 'tex' }
+Plug 'neovimhaskell/haskell-vim'
+
+"======================"
+" colorschemes Plugins "
+"======================"
+Plug 'EYH0602/sonokai'
+Plug 'Mizux/vim-colorschemes'
+Plug 'miyakogi/slateblue.vim'
+Plug 'joshdick/onedark.vim'
+Plug 'arzg/vim-corvine'
+Plug 'sickill/vim-monokai'
+Plug 'patstockwell/vim-monokai-tasty'
+Plug 'mhartington/oceanic-next'
+
+"============"
+" UI Plugins "
+"============"
+Plug 'luochen1990/rainbow'
+Plug 'miyakogi/conoline.vim'
+Plug 'itchyny/lightline.vim'
+Plug 'godlygeek/tabular'
+" autocomplete parathese
+Plug 'tmsvg/pear-tree' 
+Plug 'scrooloose/nerdtree', { 'on':  'NERDTreeToggle' }
+Plug 'https://github.com/junegunn/vim-github-dashboard.git'
+Plug 'SirVer/ultisnips' | Plug 'honza/vim-snippets'
+Plug 'tpope/vim-fireplace', { 'for': 'clojure' }
+
+call plug#end()
+
+
+
+
+
+
+""""""""""""""""""
+" Plugin settins "
+""""""""""""""""""
+
+" *** Markdown *** "
 let g:vim_markdown_folding_disabled = 1
 let g:vim_markdown_math = 1
 let g:vim_markdown_new_list_item_indent = 2
 
-" Haskell
-Plug 'neovimhaskell/haskell-vim'
+" *** LaTeX *** "
+let g:tex_flavor = 'latex'
+let g:vimtex_version_check = 0
+" let g:livepreview_previewer = 'okular'
+
+" *** Haskell *** "
 let g:haskell_enable_quantification = 1   " to enable highlighting of `forall`
 let g:haskell_enable_recursivedo = 1      " to enable highlighting of `mdo` and `rec`
 let g:haskell_enable_arrowsyntax = 1      " to enable highlighting of `proc`
@@ -32,43 +76,41 @@ let g:haskell_enable_typeroles = 1        " to enable highlighting of type roles
 let g:haskell_enable_static_pointers = 1  " to enable highlighting of `static`
 let g:haskell_backpack = 1                " to enable highlighting of backpack keywords
 
+" *** UI - lightline ***"
+let g:lightline = {
+      \ 'colorscheme': 'jellybeans',
+      \ 'component_function': {
+      \   'filename': 'LightlineFilename',
+      \ },
+      \ }
+function! LightlineFilename()
+  return &filetype ==# 'vimfiler' ? vimfiler#get_status_string() :
+        \ &filetype ==# 'unite' ? unite#get_status_string() :
+        \ &filetype ==# 'vimshell' ? vimshell#get_status_string() :
+        \ expand('%:t') !=# '' ? expand('%:t') : '[No Name]'
+endfunction
+let g:unite_force_overwrite_statusline = 0
+let g:vimfiler_force_overwrite_statusline = 0
+let g:vimshell_force_overwrite_statusline = 0
 
-" Any valid git URL is allowed
-Plug 'https://github.com/junegunn/vim-github-dashboard.git'
+" *** colorscheme - sonokai *** "
+let g:sonokai_style = 'default'    "shusia, andromeda, atlantis, maia
+let g:sonokai_enable_italic = 1
+let g:sonokai_disable_italic_comment = 1
+let g:vim_monokai_tasty_italic = 1
 
-" Multiple Plug commands can be written in a single line using | separators
-Plug 'SirVer/ultisnips' | Plug 'honza/vim-snippets'
+" *** UI - rainbow *** "
+"set to 0 if you want to enable it later via :RainbowToggle
+let g:rainbow_active = 1 
 
-" On-demand loading
-Plug 'scrooloose/nerdtree', { 'on':  'NERDTreeToggle' }
-Plug 'tpope/vim-fireplace', { 'for': 'clojure' }
-
-" Plugin outside ~/.vim/plugged with post-update hook
-Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
-
-" Unmanaged plugin (manually installed and updated)
-Plug '~/my-prototype-plugin'
-
-" LaTeX
-Plug 'lervag/vimtex'
-let g:tex_flavor = 'latex'
-let g:vimtex_version_check = 0
-
-" LaTeX live preview
-Plug 'xuhdev/vim-latex-live-preview', { 'for': 'tex' }
-let g:livepreview_previewer = 'okular'
-
-
-" autocomplete parathese
-Plug 'tmsvg/pear-tree'
+" *** UI - pear tree *** "
 " Default rules for matching:
 let g:pear_tree_pairs = {
             \ '(': {'closer': ')'},
             \ '[': {'closer': ']'},
             \ '{': {'closer': '}'},
             \ "'": {'closer': "'"},
-            \ '"': {'closer': '"'},
-            \ '`': {'closer': "'"}
+            \ '"': {'closer': '"'}
             \ }
 " See pear-tree/after/ftplugin/ for filetype-specific matching rules
 
@@ -89,80 +131,38 @@ let g:pear_tree_timeout = 60
 " Automatically map <BS>, <CR>, and <Esc>
 let g:pear_tree_map_special_keys = 1
 
-Plug 'luochen1990/rainbow'
-let g:rainbow_active = 1 "set to 0 if you want to enable it later via :RainbowToggle
 
+""""""""""""""""
+" vim settings "
+""""""""""""""""
 
-Plug 'miyakogi/conoline.vim'
+" to use backspace on mac
+set backspace=indent,eol,start
 
-Plug 'wakatime/vim-wakatime'
-
-Plug 'jbgutierrez/vim-better-comments'
-
-
-" Default mappings:
-imap <BS> <Plug>(PearTreeBackspace)
-imap <CR> <Plug>(PearTreeExpand)
-imap <Esc> <Plug>(PearTreeFinishExpansion)
-Plug 'itchyny/lightline.vim'
-" Initialize plugin system
-
-" *** color scheme ***
-Plug 'sainnhe/sonokai'
-Plug 'Mizux/vim-colorschemes'
-Plug 'miyakogi/slateblue.vim'
-Plug 'joshdick/onedark.vim'
-Plug 'arzg/vim-corvine'
-Plug 'sickill/vim-monokai'
-Plug 'patstockwell/vim-monokai-tasty'
-Plug 'mhartington/oceanic-next'
-
-call plug#end()
-
-
-" defined functions
-command! -nargs=0 Livepdf LLPStartPreview
-
-" Light line
-let g:lightline = {
-      \ 'colorscheme': 'monokai_tasty',
-      \ 'component_function': {
-      \   'filename': 'LightlineFilename',
-      \ },
-      \ }
-function! LightlineFilename()
-  return &filetype ==# 'vimfiler' ? vimfiler#get_status_string() :
-        \ &filetype ==# 'unite' ? unite#get_status_string() :
-        \ &filetype ==# 'vimshell' ? vimshell#get_status_string() :
-        \ expand('%:t') !=# '' ? expand('%:t') : '[No Name]'
-endfunction
-
-let g:unite_force_overwrite_statusline = 0
-let g:vimfiler_force_overwrite_statusline = 0
-let g:vimshell_force_overwrite_statusline = 0
-
-" color sheme
+"============="
+" colorscheme "
+"============="
 syntax on
 set termguicolors
 
-" the configuration options should be placed before `colorscheme sonokai`
-let g:sonokai_style = 'atlantis'    "shusia, andromeda, atlantis, maia
-let g:sonokai_enable_italic = 1
-let g:sonokai_disable_italic_comment = 1
-let g:vim_monokai_tasty_italic = 1
-
+" colorscheme desert
 " colorscheme onedark
 " colorscheme corvine
-" colorscheme sonokai
+colorscheme sonokai
 " colorscheme slateblue
 " colorscheme pencil
-colorscheme vim-monokai-tasty
+" colorscheme vim-monokai-tasty
 " colorscheme OeanicNext
 
+
+"===="
+" UI "
+"===="
+
 " set tabs and indent
-set tabstop=4
-set shiftwidth=4
-set softtabstop=4
+set tabstop=2
+set shiftwidth=2
+set softtabstop=2
 set expandtab
 set autoindent
 set smartindent
@@ -194,11 +194,6 @@ if has("autocmd")
     \| exe "normal! g'\"" | endif
 endif
 
-
-" to format file
-" sudo apt install astyl
-" :%!astyle
-
 " mappings
 filetype plugin on
 au FileType php setl ofu=phpcomplete#CompletePHP
@@ -208,6 +203,8 @@ au FileType c setl ofu=ccomplete#CompleteCpp
 au FileType css setl ofu=csscomplete#CompleteCSS
 
 autocmd FileType haskell setlocal shiftwidth=2 softtabstop=2 expandtab
+autocmd FileType python setlocal shiftwidth=4 softtabstop=4 expandtab
+autocmd FileType go setlocal shiftwidth=4 softtabstop=4 expandtab
 
 
 " resize vertical split window
@@ -223,3 +220,4 @@ vmap <space> :
 nnoremap <C-S-U> m1gUiw`1
 " cap the just finished word in insert mode
 inoremap <C-S-U> <ESC>gUiwgi
+
