@@ -1,0 +1,246 @@
+
+" Specify a directory for plugins
+" - For Neovim: stdpath('data') . '/plugged'
+" - Avoid using standard Vim directory names like 'plugin'
+call plug#begin('~/.vim/plugged')
+
+" Make sure you use single quotes
+
+" Shorthand notation; fetches https://github.com/junegunn/vim-easy-align
+Plug 'junegunn/vim-easy-align'
+Plug 'itchyny/vim-gitbranch'
+Plug 'tpope/vim-fugitive'
+
+" syntex
+
+" function list
+Plug 'Yggdroot/LeaderF', { 'do': './install.sh' }
+
+
+" Markdown
+Plug 'godlygeek/tabular'
+Plug 'plasticboy/vim-markdown'
+let g:vim_markdown_folding_disabled = 1
+let g:vim_markdown_math = 1
+let g:vim_markdown_new_list_item_indent = 2
+
+" Haskell
+Plug 'neovimhaskell/haskell-vim'
+let g:haskell_enable_quantification = 1   " to enable highlighting of `forall`
+let g:haskell_enable_recursivedo = 1      " to enable highlighting of `mdo` and `rec`
+let g:haskell_enable_arrowsyntax = 1      " to enable highlighting of `proc`
+let g:haskell_enable_pattern_synonyms = 1 " to enable highlighting of `pattern`
+let g:haskell_enable_typeroles = 1        " to enable highlighting of type roles
+let g:haskell_enable_static_pointers = 1  " to enable highlighting of `static`
+let g:haskell_backpack = 1                " to enable highlighting of backpack keywords
+
+
+" Any valid git URL is allowed
+Plug 'https://github.com/junegunn/vim-github-dashboard.git'
+
+" Multiple Plug commands can be written in a single line using | separators
+Plug 'SirVer/ultisnips' | Plug 'honza/vim-snippets'
+
+" On-demand loading
+Plug 'scrooloose/nerdtree', { 'on':  'NERDTreeToggle' }
+Plug 'tpope/vim-fireplace', { 'for': 'clojure' }
+
+" Plugin outside ~/.vim/plugged with post-update hook
+Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
+
+" Unmanaged plugin (manually installed and updated)
+Plug '~/my-prototype-plugin'
+
+" LaTeX
+Plug 'lervag/vimtex'
+let g:tex_flavor = 'latex'
+let g:vimtex_version_check = 0
+
+" LaTeX live preview
+Plug 'xuhdev/vim-latex-live-preview', { 'for': 'tex' }
+" let g:livepreview_previewer = 'okular'
+
+
+" autocomplete parathese
+Plug 'tmsvg/pear-tree'
+" Default rules for matching:
+let g:pear_tree_pairs = {
+            \ '(': {'closer': ')'},
+            \ '[': {'closer': ']'},
+            \ '{': {'closer': '}'},
+            \ "'": {'closer': "'"},
+            \ '"': {'closer': '"'},
+            \ '`': {'closer': "'"}
+            \ }
+" See pear-tree/after/ftplugin/ for filetype-specific matching rules
+
+" Pear Tree is enabled for all filetypes by default:
+let g:pear_tree_ft_disabled = []
+
+" Pair expansion is dot-repeatable by default:
+let g:pear_tree_repeatable_expand = 1
+
+" Smart pairs are disabled by default:
+let g:pear_tree_smart_openers = 0
+let g:pear_tree_smart_closers = 0
+let g:pear_tree_smart_backspace = 0
+
+" If enabled, smart pair functions timeout after 60ms:
+let g:pear_tree_timeout = 60
+
+" Automatically map <BS>, <CR>, and <Esc>
+let g:pear_tree_map_special_keys = 1
+
+Plug 'luochen1990/rainbow'
+let g:rainbow_active = 1 "set to 0 if you want to enable it later via :RainbowToggle
+
+
+Plug 'wakatime/vim-wakatime'
+Plug 'jbgutierrez/vim-better-comments'
+Plug 'neoclide/coc.nvim', {'branch': 'release'}
+
+" Default mappings:
+imap <BS> <Plug>(PearTreeBackspace)
+imap <CR> <Plug>(PearTreeExpand)
+imap <Esc> <Plug>(PearTreeFinishExpansion)
+Plug 'itchyny/lightline.vim'
+
+Plug 'ryanoasis/vim-devicons'
+
+
+" *** color scheme ***
+Plug 'EYH0602/sonokai'
+Plug 'Mizux/vim-colorschemes'
+Plug 'miyakogi/slateblue.vim'
+Plug 'joshdick/onedark.vim'
+Plug 'arzg/vim-corvine'
+Plug 'sickill/vim-monokai'
+Plug 'patstockwell/vim-monokai-tasty'
+Plug 'mhartington/oceanic-next'
+Plug 'rakr/vim-one'
+Plug 'hzchirs/vim-material'
+Plug 'kaicataldo/material.vim'
+Plug 'tyrannicaltoucan/vim-quantum'
+Plug 'KeitaNakamura/neodark.vim'
+
+
+call plug#end()
+
+
+
+" defined functions
+command! -nargs=0 Livepdf LLPStartPreview
+
+
+" Light line
+let g:lightline = {
+      \ 'colorscheme': 'wombat',
+      \ 'active': {
+      \   'left': [ [ 'mode', 'paste' ],
+      \             [ 'gitbranch', 'readonly', 'filename', 'modified' ] ]
+      \ },
+      \ 'component_function': {
+      \   'filename': 'LightlineFilename',
+      \   'gitbranch': 'FugitiveHead',
+      \ },
+      \ }
+function! LightlineFilename()
+  return &filetype ==# 'vimfiler' ? vimfiler#get_status_string() :
+        \ &filetype ==# 'unite' ? unite#get_status_string() :
+        \ &filetype ==# 'vimshell' ? vimshell#get_status_string() :
+        \ expand('%:t') !=# '' ? expand('%:t') : '[No Name]'
+endfunction
+
+let g:unite_force_overwrite_statusline = 0
+let g:vimfiler_force_overwrite_statusline = 0
+let g:vimshell_force_overwrite_statusline = 0
+
+" autocmd VimEnter * NERDTree | wincmd p
+
+" color sheme
+syntax on
+set termguicolors
+
+" the configuration options should be placed before `colorscheme sonokai`
+let g:sonokai_style = 'default'    "shusia, andromeda, atlantis, maia
+let g:sonokai_enable_italic = 0
+let g:vim_monokai_tasty_italic = 1
+let g:oceanic_next_terminal_bold = 1
+let g:oceanic_next_terminal_italic = 1
+
+" colorscheme onedark
+" colorscheme corvine
+colorscheme sonokai
+" colorscheme slateblue
+" colorscheme pencil
+" colorscheme vim-monokai-tasty
+" colorscheme OceanicNext
+
+hi Normal guibg=NONE ctermbg=NONE
+hi LineNr guibg=NONE ctermbg=NONE
+hi SignColumn guibg=NONE ctermbg=NONE
+hi EndOfBuffer guibg=NONE ctermbg=NONE
+
+" autocmd BufEnter * colorscheme vim-monokai-tasty
+" autocmd BufEnter *.tex colorscheme sonokai
+
+" to format file
+" sudo apt install astyl
+" :%!astyle
+
+autocmd FileType haskell setlocal shiftwidth=2 softtabstop=2 expandtab
+autocmd FileType yml setlocal shiftwidth=2 softtabstop=2 expandtab
+
+" cursor line
+set cursorline 
+
+" set tabs and indent
+set tabstop=4
+set shiftwidth=4
+set softtabstop=4
+set expandtab
+set autoindent
+set smartindent
+
+set laststatus=2
+set noshowmode
+" set number line on the left
+set number relativenumber
+set nu rnu
+set numberwidth=2
+set cpoptions+=n
+" keep 8 lines to top and bottum
+set scrolloff=8
+
+" set vertical split to right
+set splitright
+
+" set language
+set spelllang=en_us " spell
+
+" font ligatures
+set renderoptions=type:directx
+set encoding=utf-8
+
+" Uncomment the following to have Vim jump to the last position when                                                       
+" reopening a file
+if has("autocmd")
+  au BufReadPost * if line("'\"") > 0 && line("'\"") <= line("$")
+    \| exe "normal! g'\"" | endif
+endif
+
+
+" resize vertical split window
+nnoremap <silent> <Leader>+ :exe "resize " . (winheight(0) * 3/2)<CR>
+nnoremap <silent> <Leader>- :exe "resize " . (winheight(0) * 2/3)<CR>
+
+" map space to : in normal mode and virtual mode
+nmap <space> :
+vmap <space> :
+
+
+" cap this word in normal mode
+nnoremap <C-S-U> m1gUiw`1
+" cap the just finished word in insert mode
+inoremap <C-S-U> <ESC>gUiwgi
+
