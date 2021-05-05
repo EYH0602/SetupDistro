@@ -7,7 +7,7 @@ call plug#begin('~/.vim/plugged')
 Plug 'junegunn/vim-easy-align'
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 Plug 'Yggdroot/LeaderF', { 'do': './install.sh' }
-
+Plug 'wakatime/vim-wakatime'
 
 "=================="
 " Language Plugins "
