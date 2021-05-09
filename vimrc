@@ -19,6 +19,7 @@ Plug 'plasticboy/vim-markdown'
 Plug 'lervag/vimtex'
 Plug 'xuhdev/vim-latex-live-preview', { 'for': 'tex' }
 Plug 'neovimhaskell/haskell-vim'
+Plug 'bfrg/vim-cpp-modern'
 
 "======================"
 " colorschemes Plugins "
@@ -36,7 +37,6 @@ Plug 'mhartington/oceanic-next'
 " UI Plugins "
 "============"
 Plug 'luochen1990/rainbow'
-Plug 'miyakogi/conoline.vim'
 Plug 'itchyny/lightline.vim'
 Plug 'godlygeek/tabular'
 " autocomplete parathese
@@ -76,9 +76,29 @@ let g:haskell_enable_typeroles = 1        " to enable highlighting of type roles
 let g:haskell_enable_static_pointers = 1  " to enable highlighting of `static`
 let g:haskell_backpack = 1                " to enable highlighting of backpack keywords
 
+" *** C/C++ *** "
+" Disable function highlighting (affects both C and C++ files)
+let g:cpp_no_function_highlight = 1
+" Enable highlighting of C++11 attributes
+let g:cpp_attributes_highlight = 1
+" Highlight struct/class member variables (affects both C and C++ files)
+let g:cpp_member_highlight = 1
+" Put all standard C and C++ keywords under Vim's highlight group 'Statement'
+" (affects both C and C++ files)
+let g:cpp_simple_highlight = 1
+"
+
 " *** UI - lightline ***"
+" powerline, wombat, jellybeans, onedark, seoul256, PaperColor_dark
 let g:lightline = {
-      \ 'colorscheme': 'jellybeans',
+      \ 'colorscheme': 'PaperColor_dark',
+			\ 'active': {
+			\ 'left': [ [ 'mode', 'paste' ],
+      \             [ 'readonly', 'filename', 'modified' ] ],
+			\   'right': [ [ 'lineinfo' ],
+      \              [ 'percent' ],
+      \              [ 'fileformat', 'fileencoding', 'filetype' ] ]
+      \ },
       \ 'component_function': {
       \   'filename': 'LightlineFilename',
       \ },
@@ -95,7 +115,7 @@ let g:vimshell_force_overwrite_statusline = 0
 
 " *** colorscheme - sonokai *** "
 let g:sonokai_style = 'default'    "shusia, andromeda, atlantis, maia
-let g:sonokai_enable_italic = 1
+let g:sonokai_enable_italic = 0
 let g:sonokai_disable_italic_comment = 1
 let g:vim_monokai_tasty_italic = 1
 
@@ -152,7 +172,7 @@ colorscheme sonokai
 " colorscheme slateblue
 " colorscheme pencil
 " colorscheme vim-monokai-tasty
-" colorscheme OeanicNext
+" colorscheme OceanicNext
 
 
 "===="
