@@ -197,6 +197,7 @@ nnoremap <C-n> :NERDTreeMirror<CR>:NERDTreeFocus<CR>
 """"""""""""""""
 " vim settings "
 """"""""""""""""
+set cursorline
 
 " to use backspace on mac
 set backspace=indent,eol,start
