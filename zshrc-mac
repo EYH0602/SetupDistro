@@ -12,11 +12,7 @@ export EDITOR="$VISUAL"
 alias jq="jq ."
 alias py=python3
 alias rm=trash
-alias csif="ssh yifengh@pc20.cs.ucdavis.edu"
 alias gitlog="git log --all --graph --decorate"
-alias start=open
-alias vsc="code ."
-alias npm="sudo npm"
 
 # alias ls='ls --color=auto'
 alias grep='grep --colour=auto'
