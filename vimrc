@@ -15,12 +15,13 @@ Plug 'wakatime/vim-wakatime'
 Plug 'sudar/comments.vim'
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
 
-Plug 'plasticboy/vim-markdown'
+" Plug 'plasticboy/vim-markdown'
 Plug 'lervag/vimtex'
 Plug 'xuhdev/vim-latex-live-preview', { 'for': 'tex' }
 Plug 'neovimhaskell/haskell-vim'
 " Plug 'bfrg/vim-cpp-modern'
 Plug 'octol/vim-cpp-enhanced-highlight'
+Plug 'vlime/vlime', {'rtp': 'vim/'}
 
 "======================"
 " colorschemes Plugins "
@@ -48,7 +49,7 @@ Plug 'SirVer/ultisnips' | Plug 'honza/vim-snippets'
 Plug 'tpope/vim-fireplace', { 'for': 'clojure' }
 Plug 'preservim/nerdcommenter'
 
-Plug 'scrooloose/nerdtree', { 'on':  'NERDTreeToggle' }
+Plug 'preservim/nerdtree'
 Plug 'Xuyuanp/nerdtree-git-plugin'
 Plug 'ryanoasis/vim-devicons'
 Plug 'tiagofumo/vim-nerdtree-syntax-highlight'
@@ -160,11 +161,9 @@ let g:pear_tree_timeout = 60
 " Automatically map <BS>, <CR>, and <Esc>
 let g:pear_tree_map_special_keys = 1
 
-" *** UI - indent line *** "
-let g:indent_guides_guide_size            = 1  " 指定对齐线的尺寸
-let g:indent_guides_start_level           = 2  " 从第二层开始可视化显示缩进
+" *** UI - indent line *** " let g:indent_guides_guide_size  = 1  " 指定对齐线的尺寸 let g:indent_guides_start_level = 2  " 从第二层开始可视化显示缩进
 
-" *** UI - Nerd Commenter *** "
+let g:indent_guides_start_level = 2  " 从第二层开始可视化显示缩进
 filetype plugin on
 " Create default mappings
 let g:NERDCreateDefaultMappings = 1
@@ -280,7 +279,6 @@ vmap <space> :
 
 
 " cap this word in normal mode
-nnoremap <C-S-U> m1gUiw`1
-" cap the just finished word in insert mode
+nnoremap <C-S-U> m1gUiw`1 " cap the just finished word in insert mode
 inoremap <C-S-U> <ESC>gUiwgi
 
